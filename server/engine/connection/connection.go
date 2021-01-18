@@ -5,34 +5,36 @@ import (
 	"net"
 )
 
-
-type ConnectionInterface interface {
-	Read() ([]byte, error )
+type InterfaceConnection interface {
+	GetConn() *net.TCPConn
+	Read() ([]byte, error)
 	Write(msg string) error
-	Close()
+	Close() error
 }
 
 type Connection struct {
 	conn *net.TCPConn
-	r *bufio.ReadWriter
+	r    *bufio.ReadWriter
 }
 
 func NewConnection(c *net.TCPConn) *Connection {
 	return &Connection{conn: c}
 }
 
-
-func (c *Connection) Read() ([]byte, error ){
+func (c *Connection) GetConn() *net.TCPConn {
+	return c.conn
+}
+func (c *Connection) Read() ([]byte, error) {
 	buf := make([]byte, 1024)
 	_, err := c.conn.Read(buf)
-	return buf,err
+	return buf, err
 }
 
 func (c *Connection) Write(msg string) error {
-	_, err  := c.conn.Write([]byte(msg))
+	_, err := c.conn.Write([]byte(msg))
 	return err
 }
 
-func (c *Connection) Close()  {
-	c.conn.Close()
+func (c *Connection) Close() error {
+	return c.conn.Close()
 }

@@ -14,10 +14,9 @@ type Listen struct {
 	Network *net.TCPListener
 }
 
-
-func CreateListener(port int ) *Listen {
+func CreateListener(port int) *Listen {
 	addr := &net.TCPAddr{
-		IP:   net.IP{127,0,0,1},
+		IP:   net.IP{127, 0, 0, 1},
 		Port: port,
 	}
 	list, err := net.ListenTCP(addr.Network(), addr)

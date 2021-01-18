@@ -1,17 +1,18 @@
 package main
 
 import (
+	"ClientServerComm/server/engine/client"
 	"ClientServerComm/server/engine/listener"
 	"ClientServerComm/server/engine/server"
 	"flag"
 )
 
-func main()  {
+func main() {
 	//get port details
 	port := getPort()
+	cli := client.Init()
 	listen := listener.CreateListener(port)
-	server.Server(listen)
-
+	server.Server(listen, cli)
 
 }
 
