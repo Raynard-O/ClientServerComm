@@ -1,14 +1,18 @@
 package main
 
 import (
+	"ClientServerComm/server/engine/listener"
+	"ClientServerComm/server/engine/server"
 	"flag"
-	"fmt"
 )
 
 func main()  {
 	//get port details
 	port := getPort()
-	fmt.Println(port)
+	listen := listener.CreateListener(port)
+	server.Server(listen)
+
+
 }
 
 func getPort() int {
